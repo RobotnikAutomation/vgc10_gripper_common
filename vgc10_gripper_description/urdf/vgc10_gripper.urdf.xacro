@@ -4,13 +4,13 @@
   <xacro:macro name="vgc10_gripper" params="prefix parent *origin">
 
     <!--CONTAINER -->
-    <joint name="${prefix}_vgc10_joint" type="fixed">
+    <joint name="${prefix}_base_joint" type="fixed">
 	    <xacro:insert_block name="origin"/>
       <parent link="${parent}"/>
-      <child link="${prefix}_vgc10_link"/>
+      <child link="${prefix}_base_link"/>
     </joint>
 
-    <link name="${prefix}_vgc10_link">
+    <link name="${prefix}_base_link">
 	    <inertial>
 	      <mass value="0.25"/>
 	      <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -34,9 +34,25 @@
 	    </collision>
 	  </link>
 
+    <joint name="${prefix}_vacuum_joint" type="prismatic">
+      <parent link="${prefix}_base_link"/>
+      <child link="${prefix}_vacuum_link" />
+      <origin xyz="0.1042 0 0" rpy="0 0 0" />
+      <limit effort="1000" lower="0.0" upper="0.001" velocity="0.088"/>
+      <axis xyz="1 0 0" /> 
+    </joint>
+
+    <link name="${prefix}_vacuum_link">
+        <inertial>
+          <mass value="0.01" />
+          <origin xyz="0 0 0" />
+          <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="1.0"  iyz="0.0"  izz="1.0" />
+      </inertial>
+    </link>
+
     <joint name="${prefix}_vacuum_cup_1_joint" type="revolute">
-      <origin xyz="0.1322 -0.0065 -0.0189" rpy="0 0 0"/>
-      <parent link="${prefix}_vgc10_link"/>
+      <origin xyz="0.028 -0.0065 -0.0189" rpy="0 0 0"/>
+      <parent link="${prefix}_vacuum_link"/>
       <child link="${prefix}_vacuum_cup_1_link"/>
       <axis xyz="1 0 0" rpy="0 0 0" />
       <limit effort="30" velocity="1.0" lower="-0.1" upper="0.1" />
@@ -51,8 +67,8 @@
     </link>
 
     <joint name="${prefix}_vacuum_cup_2_joint" type="revolute">
-      <origin xyz="0.1322 -0.0065 0.0189" rpy="0 0 0"/>
-      <parent link="${prefix}_vgc10_link"/>
+      <origin xyz="0.028 -0.0065 0.0189" rpy="0 0 0"/>
+      <parent link="${prefix}_vacuum_link"/>
       <child link="${prefix}_vacuum_cup_2_link"/>
       <axis xyz="1 0 0" rpy="0 0 0" />
       <limit effort="30" velocity="1.0" lower="-0.1" upper="0.1" />
@@ -67,8 +83,8 @@
     </link>
 
     <joint name="${prefix}_vacuum_cup_3_joint" type="revolute">
-      <origin xyz="0.1322 0.02 0" rpy="0 0 0"/>
-      <parent link="${prefix}_vgc10_link"/>
+      <origin xyz="0.028 0.02 0" rpy="0 0 0"/>
+      <parent link="${prefix}_vacuum_link"/>
       <child link="${prefix}_vacuum_cup_3_link"/>
       <limit effort="30" velocity="1.0" lower="-0.1" upper="0.1" />
       <axis xyz="1 0 0" rpy="0 0 0" />
@@ -83,8 +99,8 @@
     </link>
 
     <joint name="${prefix}_vacuum_cup_4_joint" type="revolute">
-      <origin xyz="0.1322 0 0" rpy="0 0 0"/>
-      <parent link="${prefix}_vgc10_link"/>
+      <origin xyz="0.028 0 0" rpy="0 0 0"/>
+      <parent link="${prefix}_vacuum_link"/>
       <child link="${prefix}_vacuum_cup_4_link"/>
       <limit effort="30" velocity="1.0" lower="-0.1" upper="0.1" />
       <axis xyz="1 0 0" rpy="0 0 0" />
@@ -99,6 +115,16 @@
     </link>
 
     <!-- Transmission -->
+    <transmission name="${prefix}_vacuum_transmission"  type="SimpleTransmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="${prefix}_vacuum_joint_motor">
+          <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="${prefix}_vacuum_joint">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
     <transmission name="${prefix}_vacuum_cup_1_joint_transmission">
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${prefix}_vacuum_cup_1_joint">
