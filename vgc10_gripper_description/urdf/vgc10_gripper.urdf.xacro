@@ -50,12 +50,12 @@
       </inertial>
     </link>
 
-    <joint name="${prefix}_vacuum_cup_1_joint" type="revolute">
+    <joint name="${prefix}_vacuum_cup_1_joint" type="fixed">
       <origin xyz="0.028 -0.0065 -0.0189" rpy="0 0 0"/>
       <parent link="${prefix}_vacuum_link"/>
       <child link="${prefix}_vacuum_cup_1_link"/>
       <axis xyz="1 0 0" rpy="0 0 0" />
-      <limit effort="30" velocity="1.0" lower="-0.1" upper="0.1" />
+      <!-- <limit effort="30" velocity="1.0" lower="-0.1" upper="0.1" /> -->
     </joint>
 
     <link name="${prefix}_vacuum_cup_1_link">
@@ -66,12 +66,12 @@
       </inertial>
     </link>
 
-    <joint name="${prefix}_vacuum_cup_2_joint" type="revolute">
+    <joint name="${prefix}_vacuum_cup_2_joint" type="fixed">
       <origin xyz="0.028 -0.0065 0.0189" rpy="0 0 0"/>
       <parent link="${prefix}_vacuum_link"/>
       <child link="${prefix}_vacuum_cup_2_link"/>
       <axis xyz="1 0 0" rpy="0 0 0" />
-      <limit effort="30" velocity="1.0" lower="-0.1" upper="0.1" />
+      <!-- <limit effort="30" velocity="1.0" lower="-0.1" upper="0.1" /> -->
     </joint>
 
     <link name="${prefix}_vacuum_cup_2_link">
@@ -82,11 +82,11 @@
       </inertial>
     </link>
 
-    <joint name="${prefix}_vacuum_cup_3_joint" type="revolute">
+    <joint name="${prefix}_vacuum_cup_3_joint" type="fixed">
       <origin xyz="0.028 0.02 0" rpy="0 0 0"/>
       <parent link="${prefix}_vacuum_link"/>
       <child link="${prefix}_vacuum_cup_3_link"/>
-      <limit effort="30" velocity="1.0" lower="-0.1" upper="0.1" />
+      <!-- <limit effort="30" velocity="1.0" lower="-0.1" upper="0.1" /> -->
       <axis xyz="1 0 0" rpy="0 0 0" />
     </joint>
 
@@ -98,11 +98,11 @@
       </inertial>
     </link>
 
-    <joint name="${prefix}_vacuum_cup_4_joint" type="revolute">
+    <joint name="${prefix}_vacuum_cup_4_joint" type="fixed">
       <origin xyz="0.028 0 0" rpy="0 0 0"/>
       <parent link="${prefix}_vacuum_link"/>
       <child link="${prefix}_vacuum_cup_4_link"/>
-      <limit effort="30" velocity="1.0" lower="-0.1" upper="0.1" />
+      <!-- <limit effort="30" velocity="1.0" lower="-0.1" upper="0.1" /> -->
       <axis xyz="1 0 0" rpy="0 0 0" />
     </joint>
 
